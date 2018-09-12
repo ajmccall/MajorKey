@@ -60,17 +60,19 @@ class ViewController: UIViewController, UITextViewDelegate {
     }
     
     func showAlert(title: String, body: String, theme: Theme) {
-        let view = MessageView.viewFromNib(layout: .cardView)
-        view.configureTheme(theme)
-        view.configureDropShadow()
-        view.button!.removeFromSuperview()
-        view.configureContent(title: title, body: body, iconText: "🔑")
-        
-        var config = SwiftMessages.Config()
-        config.presentationStyle = .top
-        config.interactiveHide = true
-        config.preferredStatusBarStyle = .lightContent
-        SwiftMessages.show(config: config, view: view)
+        DispatchQueue.main.async {
+            let view = MessageView.viewFromNib(layout: .cardView)
+            view.configureTheme(theme)
+            view.configureDropShadow()
+            view.button!.removeFromSuperview()
+            view.configureContent(title: title, body: body, iconText: "🔑")
+            
+            var config = SwiftMessages.Config()
+            config.presentationStyle = .top
+            config.interactiveHide = true
+            config.preferredStatusBarStyle = .lightContent
+            SwiftMessages.show(config: config, view: view)
+        }
     }
     
     func triggerEmail(text: String) {
