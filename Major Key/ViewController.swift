@@ -54,9 +54,9 @@ class ViewController: UIViewController, UITextViewDelegate {
         oldKeys!.append(text)
         UserDefaults.standard.set(oldKeys, forKey: defaultsForHistory)
         
-        triggerEmail(text: text)
-        
-        self.majorTextView.text = ""
+        if (text.count > 0) {
+            triggerEmail(text: text)
+        }
     }
     
     func showAlert(title: String, body: String, theme: Theme) {
@@ -127,6 +127,10 @@ class ViewController: UIViewController, UITextViewDelegate {
                 let responseString = String(data: data, encoding: .utf8)
                 print("responseString = \(String(describing: responseString))")
                 self.showAlert(title: "Major Key", body: "Never forget dat major key", theme: .success);
+                
+                DispatchQueue.main.async {
+                    self.majorTextView.text = ""
+                }
             }
             task.resume()
         } catch {
